@@ -36,14 +36,11 @@ print('bt3:', bt3)
 print('bt3.sum():', bt3.sum())
 
 # 1.b
-'''
 print('bt2.size():', bt2.size())    # should display 0
 print('bt1.size():', bt1.size())    # should display 4
 print('bt3.size():', bt3.size())    # should display 10
-'''
 
 # 1.c
-'''
 bt4 = bt.BinaryTree()
 for k in range(5):
     bt4.insert(k)       # insert in ascending order!
@@ -68,26 +65,20 @@ bt4.print_pretty()      # should display:
 print('\nbt3.print_pretty():')
 bt3.print_pretty()      # does the output make sense, given the
                         # order of inserts into bt3?
-'''
 
 # 1.d
-'''
 print('bt2.depth():', bt2.depth())    # should display 0
 print('bt1.depth():', bt1.depth())    # should display 3
 print('bt4.depth():', bt4.depth())    # should display 5
 print('bt3.depth():', bt3.depth())    # does the output make sense?
-'''
 
 # 1.e
-'''
 print('bt1 == bt2:', bt1 == bt2)      # should be False
 print('bt1 == bt1:', bt1 == bt1)      # should be True
 bt5 = bt3          # bt5 and bt3 refer to the same tree!
 print('bt5 == bt3:', bt5 == bt3)
-'''
 
 # 1.f
-'''
 print('bt1.min():', bt1.min())
 print('bt1.max():', bt1.max())
 print('bt1.mean():', bt1.mean())
@@ -100,4 +91,3 @@ print('bt3.mean():', bt3.mean())
 print('bt4.min():', bt4.min())
 print('bt4.max():', bt4.max())
 print('bt4.mean():', bt4.mean())
-'''
