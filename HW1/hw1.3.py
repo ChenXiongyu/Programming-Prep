@@ -1,48 +1,44 @@
+# File: hw1.3.py
+# Author(s): xiongyuc, nkulukur, ppanda
+
 # 3.a
+import numpy as np
+
+
 def price(i):
-    if 1 <= i <= 4:
+    if i >= 1 and i <= 4:
         return [0, 1, 5, 8, 9][i]
     return 0
 
 
-M = {}
-Method = {}
+M = {}     # dict of already computed (values,cuts)
+
+
 def Rev(N):
     if N in M:
-        return M[N], Method[N]
+        return M[N]
     mxrev = 0
-    if N <= 1:
+    cuts = []
+    if N < 1:
         mxrev = price(N)
-        method = [N]
     else:
-        for k in range(1, N + 1):
-            potential = Rev(N - k)
-            if mxrev < potential[0] + price(k):
-                mxrev = potential[0] + price(k)
-                method = potential[1]
-                method.append(k)
-    if N > 0:
-        try:
-            method.remove(0)
-        except ValueError:
-            pass
-    M[N] = mxrev
-    Method[N] = method
-    return mxrev, method
+        for k in range(1, N+1):  # [1..N]
+            checkval = price(k) + Rev(N-k)[0]
+            if(checkval > mxrev):
+                cuts = Rev(N-k)[1] + [k]
+                mxrev = checkval
+    M[N] = (mxrev, cuts)
+    return M[N]
 
 
-for N in range(21):
-    print('N: {:d}'.format(N))
-    result = Rev(N)
-    print('Maximum Revenue: {:d}'.format(result[0]))
-    print('Cuts: ', result[1])
-    
-    
+for i in range(21):
+    print("Rev({:d}) = ".format(i), Rev(i))
+
+
 # 3.b
-import numpy as np
-A0 = np.array([[0, np.inf, np.inf, 1], 
-               [2, 0, 4, 5], 
-               [np.inf, np.inf, 0, 3], 
+A0 = np.array([[0, np.inf, np.inf, 1],
+               [2, 0, 4, 5],
+               [np.inf, np.inf, 0, 3],
                [np.inf, 7, 1, 0]])
 
 
@@ -56,18 +52,19 @@ def WSD(Graph):
         update.append(graph)
     return update
 
+
 # Display A_4
 A4 = WSD(A0)[-1]
 print('A4: ')
 print(A4)
 
 # 3.c
-A0 = np.array([[0, 6, np.inf, 1, np.inf, np.inf, 3], 
-               [np.inf, 0, 2, np.inf, np.inf, 4, np.inf], 
-               [np.inf, np.inf, 0, 4, np.inf, np.inf, np.inf], 
-               [np.inf, np.inf, np.inf, 0, 10, np.inf, 2], 
-               [np.inf, np.inf, 1, np.inf, 0, 1, np.inf], 
-               [np.inf, np.inf, 4, np.inf, 1, 0, np.inf], 
+A0 = np.array([[0, 6, np.inf, 1, np.inf, np.inf, 3],
+               [np.inf, 0, 2, np.inf, np.inf, 4, np.inf],
+               [np.inf, np.inf, 0, 4, np.inf, np.inf, np.inf],
+               [np.inf, np.inf, np.inf, 0, 10, np.inf, 2],
+               [np.inf, np.inf, 1, np.inf, 0, 1, np.inf],
+               [np.inf, np.inf, 4, np.inf, 1, 0, np.inf],
                [2, 1, np.inf, np.inf, np.inf, np.inf, 0]])
 # Display A_7
 A7 = WSD(A0)[-1]

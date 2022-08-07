@@ -1,6 +1,6 @@
 
 # File: BinaryTree.py
-# Author(s): Xiongyu Chen
+# Author(s): xiongyuc, nkulukur, ppanda
 
 class BinaryTree:
     class _BTNode:
@@ -78,40 +78,35 @@ class BinaryTree:
             ret = ''
         return ret
     def depth(self):
-        return self._depth_help(self._top)
-    def _depth_help(self, cur_node):
-        depth = 0
-        if cur_node != None:
-            depth += 1
-            if cur_node._left != None:
-                left_depth = self._depth_help(cur_node._left)
-            else:
-                left_depth = 0
-            if cur_node._right != None:
-                right_depth = self._depth_help(cur_node._right)
-            else:
-                right_depth = 0
-            depth += max(left_depth, right_depth)
-        return depth
+        return self._depth_helper( self._top )
+    def _depth_helper(self,cur_node):
+        if cur_node == None:
+            return 0;
+        else:
+            return 1 + max(self._depth_helper(cur_node._left), 
+                           self._depth_helper(cur_node._right))
     def __eq__(self, other):
-        self_list = str(self).split(' ')
-        self_list.sort()
-        other_list = str(other).split(' ')
-        other_list.sort()
-        return self_list == other_list
+        return self.__str__ == other.__str__
     def min(self):
-        if str(self) != '':
-            return min([int(i) for i in str(self).split(' ')])
-        else:
+        return self._min_helper(self._top)
+    def _min_helper(self, cur_node):
+        if cur_node == None:
             return None
+        else:
+            while(cur_node._left is not None):
+                cur_node = cur_node._left
+        return cur_node._value
     def max(self):
-        if str(self) != '':
-            return max([int(i) for i in str(self).split(' ')])
-        else:
+        return self._max_helper(self._top)
+    def _max_helper(self, cur_node):
+        if cur_node == None:
             return None
+        else:
+            while(cur_node._right is not None):
+                cur_node = cur_node._right
+        return cur_node._value
     def mean(self):
-        if str(self) == '':
-            return None
-        else:
-            value = [int(i) for i in str(self).split(' ')]
-            return sum(value) / len(value)
+            if self._top == None:
+                return None
+            else:
+                return self.sum()/self.size()

@@ -1,5 +1,6 @@
 
 # breadth_first_search.py
+# Author(s): xiongyuc, nkulukur, ppanda
 
 # # 2.a (function definition)
 # '''
@@ -48,6 +49,10 @@ def BFS(G, root, target):
                 S.add(v)
                 T.add(v, cur)
                 Q.append(v)
+    if( target == None ):
+        Conn_Comp = list(T.tree.keys())
+        Conn_Comp.sort()
+        return Conn_Comp
 
 
 # # 2.c (function definitions)
@@ -56,27 +61,15 @@ def BFS_con_comps(G):
     # return a list of connected components in G,
     # where each connected component is a sorted list of nodes
     nodes = list(G.keys())
-    Nodes = nodes.copy()
-    Nodes.sort()
-    connected = []
-    
-    for node in Nodes:
-        if node in nodes:
-            for part in connected:
-                route = BFS(G, node, part[0])
-                if route:
-                    part.append(node)
-                    nodes.remove(node)
-                    break
-            if node in nodes:
-                connected.append([node])
-        else:
-            continue
-    
-    for part in connected:
-        part.sort()
-    
-    return connected
+    nodes.sort()
+    G_cc = []
+    visited = []
+    for node in nodes:
+        if node not in visited:
+            cc = BFS( G, node, None)
+            visited += cc
+            G_cc += [cc]
+    return G_cc
 
 
 def print_con_comps(G_cc):  # display connected components
