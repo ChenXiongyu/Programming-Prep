@@ -1,6 +1,6 @@
 
 # File: BinaryTree.py
-# Author(s):
+# Author(s): Xiongyu Chen
 
 class BinaryTree:
     class _BTNode:

@@ -18,8 +18,6 @@
 #             Q += [v]
 # '''
 
-from matplotlib.pyplot import connect
-
 
 class ParentTree:
     def __init__(self, root):
@@ -84,7 +82,7 @@ def BFS_con_comps(G):
 def print_con_comps(G_cc):  # display connected components
     print('graph contains', len(G_cc), 'connected components:')
     for i in range(len(G_cc)):    
-        print('\t{:d}: '.format(i), end='')
+        print('    {:d}: '.format(i + 1), end='')
         print(G_cc[i])
 
 
