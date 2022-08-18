@@ -1,6 +1,6 @@
 
 # File: BinaryTree_hw2.py
-# Author(s): xiongyuc
+# Author(s): xiongyuc, diwend, yuxuanl5
 
 class BinaryTree:
     class _BTNode:
@@ -110,6 +110,7 @@ class BinaryTree:
                 return None
             else:
                 return self.sum()/self.size()
+
     def __contains__(self, value):
         self = self._top
         while True:
@@ -121,24 +122,19 @@ class BinaryTree:
                 self = self._right
             else:
                 self = self._left
+
     def copy(self):
-        nums_list = []
-        
-        def nums_help(cur_node):
-            if cur_node == None:
-                return
-            nums_list.append(cur_node._value)
-            nums_help(cur_node._left)
-            nums_help(cur_node._right)
-        
-        def nums(self):
-            return nums_help(self._top)
-        
-        nums(self)
-        c = BinaryTree()
-        for num in nums_list:
-            c.insert(num)
-        return c
+        tree = BinaryTree()
+        tree._top = self._copy_help(self._top)
+        return tree
+    def _copy_help(self, node):
+        if (node != None):
+            new_node = BinaryTree._BTNode(node._value, node._left, node._right)
+            new_node._left = self._copy_help(new_node._left)
+            new_node._right = self._copy_help(new_node._right)
+            return new_node
+        return None
+    
     def negate(self):
         self._top = self._negate_help(self._top)
     def _negate_help(self, cur_node):

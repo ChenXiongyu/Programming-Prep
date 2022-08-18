@@ -1,6 +1,6 @@
 
 # File hw2_1.py
-# Author(s): xiongyuc
+# Author(s): xiongyuc, diwend, yuxuanl5
 
 # 1.a
 
@@ -9,17 +9,16 @@ import numpy as np
 np.random.seed(1)   # so results match
 
 
-def max_sublist_sum(l):
-    start = 0
-    end = 1
-    for i in range(1, len(l)):
-        if sum(l[end:i + 1]) > 0:
-            end = i + 1
-            if sum(l[start:i]) < 0:
-                start = i
-        else:
-            continue
-    return sum(l[start:end])
+def max_sublist_sum(nums):
+    l,r  = 0,0
+    max_rev = nums[0]
+    if len(nums) == 1:
+        return max_rev
+    for r in range(1, len(nums)):
+        max_rev = max(nums[r], max_rev, sum(nums[l:r])+nums[r])
+        if max_rev == nums[r]:
+            l = r
+    return max_rev
     
     
 list1 = [2, -4, 7, 2, 0, 5, -3, 4, -2]
@@ -34,15 +33,17 @@ for n in range(10, 20):
 
 # 1.b
 def knapsack01(item_wgts, item_vals, tot_wgt):
-    A = np.zeros((len(item_wgts) + 1, tot_wgt + 1), dtype=int)
-    for k in range(1, len(item_wgts) + 1):
-        for X in range(1, tot_wgt + 1):
-            if X - item_wgts[k - 1] < 0:
-                A[k, X] = A[k - 1, X]
+    dp_matrix = np.zeros((len(item_wgts), tot_wgt+1), dtype=int)
+    dp_matrix[0, item_wgts[0]:] = item_vals[0]
+    for i in range(1, len(item_wgts)):
+        for j in range(tot_wgt+1):
+            wgt = item_wgts[i]
+            if j - wgt < 0:
+                dp_matrix[i,j] = dp_matrix[i-1, j]
             else:
-                A[k, X] = max(A[k - 1, X], 
-                              item_vals[k - 1] + A[k - 1, X - item_wgts[k - 1]])
-    return A[-1, -1]
+                dp_matrix[i,j] = max(dp_matrix[i-1,j], dp_matrix[i-1,j-wgt] + item_vals[i])
+    # print(dp_matrix)
+    return(dp_matrix[-1,-1])
 
 
 item_weights = [3, 1, 12, 5, 2]

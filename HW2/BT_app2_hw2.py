@@ -1,6 +1,6 @@
 
 # File BT_app2_hw2.py
-# Author(s): xiongyuc
+# Author(s): xiongyuc, diwend, yuxuanl5
 
 import BinaryTree_hw2 as bt
 
